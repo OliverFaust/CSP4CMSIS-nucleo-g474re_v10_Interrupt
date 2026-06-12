@@ -1,6 +1,6 @@
 # CSP4CMSIS Interrupt Demo for NUCLEO-G474RE
 
-A real‑time embedded demonstration of the **CSP (Communicating Sequential Processes)** library using CMSIS‑RTOS v2 on an STM32G474RE microcontroller. This project shows how to safely connect an external interrupt (blue user button) to CSP channels, triggering a chain of process communications.
+A real‑time embedded demonstration of the **CSP (Communicating Sequential Processes)** library using CMSIS‑RTOS v2 on an STM32G474RE microcontroller. This project shows how to safely connect an external interrupt (blue user button) to CSP channels, triggering a chain of process communications. The formal CSP model can be found [here](https://github.com/OliverFaust/CSP4CMSIS-nucleo-g474re_v10_Interrupt/tree/main/Formal%20model).
 
 ## Features
 

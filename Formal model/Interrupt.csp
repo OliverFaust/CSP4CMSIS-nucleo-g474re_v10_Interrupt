@@ -1,0 +1,39 @@
+-- Interrupt
+datatype buttonState = pressed | released
+datatype triggerState = trigger
+channel buttonChan : buttonState
+channel g_trigger_chan : triggerState
+channel counterChan : {0..3}
+channel print_ : {0..3}
+
+ENV =
+      buttonChan.pressed -> ENV
+|~|  
+      buttonChan.released -> ENV
+
+
+ButtonProcess =
+      buttonChan.pressed
+          -> g_trigger_chan.trigger
+          -> ButtonProcess
+  []
+      buttonChan.released
+          -> ButtonProcess
+
+
+Sender(n) =
+    g_trigger_chan.trigger
+        -> counterChan!n
+        -> Sender((n+1)%4)
+
+
+Receiver =
+    counterChan?x:{0..3}
+        -> print_!x
+        -> Receiver
+
+
+SYSTEM =
+    (ENV [| {|buttonChan|} |] ButtonProcess)
+        [| {|g_trigger_chan|} |]
+    (Sender(0) [| {|counterChan|} |] Receiver)

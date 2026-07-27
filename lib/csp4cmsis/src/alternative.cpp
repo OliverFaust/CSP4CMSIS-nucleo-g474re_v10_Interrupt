@@ -16,7 +16,7 @@ AltScheduler::~AltScheduler() {
 
 void AltScheduler::initForCurrentTask() {
     waiting_task_handle = xTaskGetCurrentTaskHandle();
-    event_group = xEventGroupCreate();
+    event_group = xEventGroupCreateStatic(&event_group_buffer);
 }
 
 unsigned int AltScheduler::select(Guard** guardArray, size_t amount, size_t offset) {

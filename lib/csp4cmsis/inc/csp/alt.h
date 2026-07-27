@@ -35,6 +35,15 @@ namespace csp {
         private:
             TaskHandle_t waiting_task_handle = nullptr;
             EventGroupHandle_t event_group = nullptr;
+            // API 1.3: backing storage for xEventGroupCreateStatic() --
+            // no heap allocation for the event group, matching task
+            // creation's move to xTaskCreateStatic(). Unlike TaskCtx (see
+            // process.h), this buffer never needs to outlive `this`: it's
+            // only ever touched by this object's own methods
+            // (select()/wakeUp()), never handed to another independently-
+            // scheduled task, so there's no separate lifetime to design
+            // around -- it just needs normal member lifetime.
+            StaticEventGroup_t event_group_buffer;
         public:
             AltScheduler();
             ~AltScheduler(); 
